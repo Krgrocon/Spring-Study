@@ -41,4 +41,10 @@ public class MemberService {
     public Optional<Member> findOne(Long memberId) {
         return memberRepository.findById(memberId);
     }
+
+    /**
+     *
+     게시판 글쓰기
+     */
+
 }

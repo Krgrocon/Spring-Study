@@ -14,20 +14,6 @@ public class SpringConfig {
 
 
 
-//    private DataSource dataSource;
-//
-//    public SpringConfig(DataSource dataSource) {
-//        this.dataSource = dataSource;
-//    }
-
-//
-//    private EntityManager em;
-//
-//    @Autowired
-//    public SpringConfig(EntityManager em) {
-//        this.em = em;
-//    }
-
     private final MemberRepository memberRepository;
 
     public SpringConfig(MemberRepository memberRepository) {

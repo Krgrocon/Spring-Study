@@ -27,11 +27,16 @@ public class MemberController {
     }
 
     @PostMapping("/members/new")
-    public String create(MemberForm form) {
+    public String create(MemberForm form,Model model) {
         Member member = new Member();
         member.setName(form.getName());
 
-        memberService.join(member);
+        try {
+            memberService.join(member);
+        } catch (IllegalStateException e) {
+            model.addAttribute("errorMessage", e.getMessage());
+            return "members/createMemberForm"; // 회원 가입 폼으로 다시 이동
+        }
         return "redirect:/";
     }
 
