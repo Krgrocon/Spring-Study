@@ -36,14 +36,14 @@
             margin-top: 0;
             color: #333;
         }
-        .sidebar form {
+        .sidebar form, .sidebar div {
             display: flex;
             flex-direction: column;
             width: 100%; /* 폼의 너비를 부모의 100%로 설정 */
         }
         .sidebar input, .sidebar button {
-            margin-bottom: 15px;
-            padding: 10px;
+            margin-bottom: 10px; /* 버튼 아래 여백을 줄임 */
+            padding: 8px; /* 패딩을 줄임 */
             border: 1px solid #ccc;
             border-radius: 5px;
             font-size: 14px;
@@ -119,21 +119,45 @@
             align-items: center; /* 중앙 정렬 */
             height: auto;
         }
+        .button-row {
+            display: flex;
+            width: 100%;
+            justify-content: space-between;
+            margin-bottom: 10px; /* 버튼 행 아래 여백을 줄임 */
+        }
+        .button-row button {
+            width: 48%; /* 버튼을 각자 48% 너비로 설정 */
+        }
     </style>
 </head>
 <body>
 <div class="container">
-    <div class="sidebar">
+    <!-- 로그인된 사용자 처리 -->
+    <div class="sidebar" th:if="${session.loggedInUser != null}">
         <h2>로그인</h2>
-        <form>
+        <h1>Welcome, <span th:text="${session.loggedInUser.username}">User</span>!</h1>
+        <div class="button-row">
+            <button type="button" onclick="location.href='/messages'">회원정보</button>
+        </div>
+        <div class="button-row">
+            <button type="button" onclick="location.href='/messages'">쪽지함</button>
+        </div>
+        <button type="button" onclick="location.href='/logout'">Logout</button>
+    </div>
+
+    <!-- 로그인하지 않은 사용자 처리 -->
+    <div class="sidebar" th:if="${session.loggedInUser == null}">
+        <h2>로그인</h2>
+        <form action="login" method="post">
             <label for="username">아이디:</label>
             <input type="text" id="username" name="username" required>
             <label for="password">비밀번호:</label>
             <input type="password" id="password" name="password" required>
-            <button type="button" onclick="location.href='/members'">리스트</button>
+            <button type="submit">로그인</button>
             <button type="button" onclick="location.href='/members/new'">회원가입</button>
         </form>
     </div>
+
     <div class="content">
         <div class="category">
             <div>카테고리 1</div>
@@ -152,11 +176,5 @@
     </div>
 
 </div>
-<!--<script>-->
-<!--    // 자바스크립트를 통해 버튼 클릭 시 링크로 이동하는 방법-->
-<!--    document.querySelector('.btn').addEventListener('click', function() {-->
-<!--        window.location.href = '/members/new';-->
-<!--    });-->
-<!--</script>-->
 </body>
 </html>
