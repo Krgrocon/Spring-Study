@@ -103,9 +103,9 @@
 </div>
 <script th:inline="javascript">
     /*<![CDATA[*/
-    var errorMessage = /*[[${errorMessage != null ? '\'' + errorMessage + '\'' : 'null'}]]*/ 'null';
+    var errorMessage = /*[[${errorMessage != null ? errorMessage : 'null'}]]*/ 'null';
     if (errorMessage !== 'null' && errorMessage !== "") {
-        alert("이미 존재하는 회원입니다.");
+        alert(errorMessage);
     }
     /*]]>*/
 </script>

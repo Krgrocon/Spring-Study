@@ -33,12 +33,23 @@ public class MemberController {
         member.setUsername(form.getUsername());
         member.setPassword(form.getPassword());
         member.setEmail(form.getEmail());
+        boolean isPassword= memberService.PasswordVerification(member.getPassword());
+        boolean isUsername= memberService.usernameVerification(member.getUsername());
 
-        System.out.println(member.getPassword() + "gg" + member.getEmail() +"55" + member.getUsername());
+        if(!isUsername) {
+            model.addAttribute("errorMessage", "아이디를 형식에 맞춰 입력해주세요");
+            return "members/createMemberForm";
+        }
+        if(!isPassword){
+            model.addAttribute("errorMessage", "패스워드를 형식에 맞춰 입력해주세요");
+            return "members/createMemberForm";
+        }
+
+
         try {
             memberService.save(member);
         } catch (IllegalStateException e) {
-            model.addAttribute("errorMessage", e.getMessage());
+            model.addAttribute("errorMessage", "이미 가입된 아이디 입니다.");
             return "members/createMemberForm"; // 회원 가입 폼으로 다시 이동
         }
         return "redirect:/";
